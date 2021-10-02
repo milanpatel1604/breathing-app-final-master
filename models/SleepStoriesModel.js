@@ -3,16 +3,10 @@ const Schema = mongoose.Schema;
 const ObjectId=Schema.ObjectId;
 
 const SleepStoriesSchema=new Schema({
-    story_name: {
-        type: String,
+    language: {
+        type: [ObjectId]
     },
-    story_description: {
-        type: String
-    },
-    lessons: {
-        type: String
-    },
-    image_extention: {
+    track_extention: {
         type: String
     }
 });

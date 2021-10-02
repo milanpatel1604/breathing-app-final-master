@@ -7,28 +7,18 @@ const { title } = require('process');
 
 
 //GET  /api/sleep/allSleepTracks --fetching all tracks of sleep
-sleepTrackRoute.get('/allSleepTracks', authController.protect, sleepController.allSleepTracks);
+sleepTrackRoute.get('/allSleepTracks', sleepController.allSleepTracks);
 
-//GET  /api/meditation//getSleepTrack/:track_id --fetching all tracks of sleep
-sleepTrackRoute.get('/getSleepTrack/:track_id', authController.protect, sleepController.getSleepTrack)
-
-//GET  /api/meditation/categorizedSleepTracks --fetching all tracks of sleep
-sleepTrackRoute.get('/categorizedSleepTracks', authController.protect, sleepController.categorizedSleepTracks)
+//GET  /api/meditation//getSleepTrack/:track_id --fetching all tracks of meditation
+sleepTrackRoute.get('/getSleepTrack/:track_id', sleepController.getSleepTrack)
 
 // sleepStories-- pending...
-//GET  /api/sleep/allSleepStories --fetching all tracks of sleep
-sleepTrackRoute.get('/allSleepStories', authController.protect, sleepController.allSleepStories)
-//GET  /api/meditation/getLiveTrack/:story_id --fetching all tracks of sleep
-sleepTrackRoute.get('/getSleepStory/:story_id', authController.protect, sleepController.getSleepStory)
-//GET  /api/meditation/getLiveTrack/:story_id --fetching all tracks of sleep
-sleepTrackRoute.get('/allStoryLanguages/:story_id', authController.protect, sleepController.allStoryLanguages)
 
-// favorite--
-sleepTrackRoute.get('/addSleepFavorite/:track_id', authController.protect, sleepController.addSleepFavorite);
-sleepTrackRoute.get('/getSleepFavorite', authController.protect, sleepController.getSleepFavorite)
-sleepTrackRoute.get('/removeSleepFavorite/:track_id', authController.protect, sleepController.removeSleepFavorite)
-// story favorite--
-sleepTrackRoute.get('/addSleepStoryFavorite/:story_id', authController.protect, sleepController.addSleepStoryFavorite);
-sleepTrackRoute.get('/removeSleepStoryFavorite/:story_id', authController.protect, sleepController.removeSleepStoryFavorite)
+
+
+// userspecific--
+sleepTrackRoute.post('/addSleepFavorite', sleepController.addSleepFavorite);
+sleepTrackRoute.get('/getSleepFavorite/:user_id', sleepController.getSleepFavorite)
+sleepTrackRoute.post('/removeSleepFavorite', sleepController.removeSleepFavorite)
 
 module.exports = sleepTrackRoute;

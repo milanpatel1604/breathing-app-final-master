@@ -3,6 +3,9 @@ const Schema = mongoose.Schema;
 const ObjectId=Schema.ObjectId;
 
 const RelaxMelodiesSchema=new Schema({
+    section_id: {
+        type: ObjectId
+    },
     sound_title: {
         type: String
     },
