@@ -15,6 +15,9 @@ const MoodChartSchema=new Schema({
     mood: {
         type: String,
         enum: ['amazing', 'happy', 'confused', 'okay', 'sad']
+    },
+    noOfHappyDays: {
+        type: Integer
     }
 });
 

@@ -22,6 +22,7 @@ loginForm.addEventListener("submit",async (e)=>{
 
     if(result.status === 200){
         password.value="";
+        console.log(result.message)
         document.location.href='/users';
     }
     else{
@@ -39,8 +40,3 @@ loginForm.addEventListener("submit",async (e)=>{
         
     }
 })
-
-window.addEventListener("load", function () {
-    const loader = document.querySelector(".loader");
-    loader.className += " hidden"; // class "loader hidden"
-});

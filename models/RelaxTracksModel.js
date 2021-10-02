@@ -2,12 +2,15 @@ const mongoose=require('mongoose');
 const Schema = mongoose.Schema;
 const ObjectId=Schema.ObjectId;
 
-const LiveTracksSchema=new Schema({
+const RelaxTracksSchema=new Schema({
     section_id: {
         type: ObjectId
     },
+    category_id: {
+        type: [ObjectId],
+    },
     title: {
-        type: String
+        type: String,
     },
     artist: {
         type: String
@@ -15,14 +18,8 @@ const LiveTracksSchema=new Schema({
     description: {
         type: String
     },
-    date: {
-        type: String
-    },
-    startTime: {
-        type: String
-    },
-    endTime: {
-        type: String
+    isPremium: {
+        type: Boolean
     },
     track_duration: {
         type: String
@@ -36,5 +33,5 @@ const LiveTracksSchema=new Schema({
 });
 
 
-const LiveTrack = mongoose.model("LiveTrack", LiveTracksSchema);
-module.exports = LiveTrack;
+const RelaxTrack = mongoose.model("RelaxTrack", RelaxTracksSchema);
+module.exports = RelaxTrack;

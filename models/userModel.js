@@ -100,6 +100,7 @@ userSchema.methods.createVerificationToken = function () {
 
   this.verificationToken = token
 
+  console.log({ token }, this.verificationToken);
 
   this.verificationTokenExpiresAt = Date.now() + 2 * 60 * 1000;
 

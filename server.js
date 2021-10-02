@@ -1,6 +1,7 @@
 const dotenv = require("dotenv");
 const mongoose=require('mongoose');
-const url = 'mongodb+srv://milan_patel____:Milan%4016@cluster0.9q17c.mongodb.net/myFirstDatabase?retryWrites=true&w=majority';
+const url =  'mongodb+srv://vaibhav:vaibhav@cluster0.9q17c.mongodb.net/myFirstDatabase?retryWrites=true&w=majority'
+//'mongodb://localhost:27017/breathing-app';
 
 
 process.on("uncaughtException", (err) => {

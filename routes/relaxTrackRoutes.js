@@ -7,22 +7,19 @@ const { title } = require('process');
 
 
 //GET  /api/relax/allRelaxTracks --fetching all tracks of relax
-relaxTrackRoute.get('/allRelaxTracks', authController.protect, relaxController.allRelaxTracks);
+relaxTrackRoute.get('/allRelaxTracks', relaxController.allRelaxTracks);
 
-//GET  /api/relax/categorizedRelaxTracks --fetching categorized tracks of relax
-relaxTrackRoute.get('/categorizedRelaxTracks', authController.protect, relaxController.categorizedRelaxTracks)
-
-//GET  /api/relax/getRelaxTrack --fetching all tracks of relax
-relaxTrackRoute.get('/getRelaxTrack/:track_id', authController.protect, relaxController.getRelaxTrack)
+//GET  /api/meditation/getRelaxTrack --fetching all tracks of meditation
+relaxTrackRoute.get('/getRelaxTrack/:track_id', relaxController.getRelaxTrack)
 
 //Relax Melody--
 //GET  /api/relax/allRelaxMelodySounds --fetching all sounds of relax
-relaxTrackRoute.get('/allRelaxMelodySounds', authController.protect, relaxController.allRelaxMelodySounds);
+relaxTrackRoute.get('/allRelaxMelodySounds', relaxController.allRelaxMelodySounds);
 
 
 // userspecific--
-relaxTrackRoute.get('/addRelaxFavorite/:track_id', authController.protect, relaxController.addRelaxFavorite);
-relaxTrackRoute.get('/getRelaxFavorite', authController.protect, relaxController.getRelaxFavorite)
-relaxTrackRoute.get('/removeRelaxFavorite/:track_id', authController.protect, relaxController.removeRelaxFavorite)
+relaxTrackRoute.post('/addRelaxFavorite', relaxController.addRelaxFavorite);
+relaxTrackRoute.get('/getRelaxFavorite/:user_id', relaxController.getRelaxFavorite)
+relaxTrackRoute.post('/removeRelaxFavorite', relaxController.removeRelaxFavorite)
 
 module.exports = relaxTrackRoute;

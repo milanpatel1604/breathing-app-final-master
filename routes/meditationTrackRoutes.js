@@ -7,27 +7,21 @@ const { title } = require('process');
 
 
 //GET  /api/meditation/allMeditationTracks --fetching all tracks of meditation
-meditationTrackRoute.get('/allMeditationTracks', authController.protect, meditationController.allMeditationTracks)
-
-//GET  /api/meditation/categorizedMeditationTracks --fetching all tracks of meditation
-meditationTrackRoute.get('/categorizedMeditationTracks', authController.protect, meditationController.categorizedMeditationTracks)
+meditationTrackRoute.get('/allMeditationTracks', meditationController.allMeditationTracks)
 
 //GET  /api/meditation/getMeditationTrack/:track_id --fetching all tracks of meditation
-meditationTrackRoute.get('/getMeditationTrack/:track_id', authController.protect, meditationController.getMeditationTrack)
+meditationTrackRoute.get('/getMeditationTrack/:track_id', meditationController.getMeditationTrack)
 
 //daily live meditation-- pending...
 //GET  /api/meditation/allLiveTracks --fetching all tracks of meditation
-meditationTrackRoute.get('/liveMeditation', authController.protect, meditationController.liveMeditation)
-
-//GET  /api/meditation/allLiveTracks --fetching all tracks of meditation
-meditationTrackRoute.get('/allLiveTracks', authController.protect, meditationController.allLiveTracks)
+meditationTrackRoute.get('/allLiveTracks', meditationController.allLiveTracks)
 //GET  /api/meditation/getLiveTrack/:track_id --fetching all tracks of meditation
-meditationTrackRoute.get('/getLiveTrack/:track_id', authController.protect, meditationController.getLiveTrack)
+meditationTrackRoute.get('/getLiveTrack/:track_id', meditationController.getLiveTrack)
 
 // userspecific--
-meditationTrackRoute.get('/addMeditationFavorite/:track_id', authController.protect, meditationController.addMeditationFavorite)
-meditationTrackRoute.get('/getMeditationFavorite', authController.protect, meditationController.getMeditationFavorite)
-meditationTrackRoute.get('/removeMeditationFavorite/:track_id', authController.protect, meditationController.removeMeditationFavorite)
+meditationTrackRoute.post('/addMeditationFavorite', meditationController.addMeditationFavorite)
+meditationTrackRoute.get('/getMeditationFavorite/:user_id', meditationController.getMeditationFavorite)
+meditationTrackRoute.post('/removeMeditationFavorite', meditationController.removeMeditationFavorite)
 
 
 module.exports = meditationTrackRoute;
