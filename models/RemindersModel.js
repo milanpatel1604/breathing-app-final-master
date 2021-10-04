@@ -20,6 +20,9 @@ const RemindersSchema=new Schema({
     is_active: {
         type: Boolean,
         default: true
+    },
+    reminder_timestamp: {
+        type: Date
     }
 });
 

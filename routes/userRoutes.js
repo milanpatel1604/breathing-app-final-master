@@ -36,5 +36,10 @@ router.get('/getUserMood', authController.protect, userController.getUserMood);
 router.get('/getSubscriptionInfo',  authController.protect, userController.getusersubinfo);
 router.post('/setSubscriptionInfo',  authController.protect, userController.setusersubinfo);
 
+router.get('/getUserReminder',  authController.protect, userController.getUserReminder);
+router.post('/setUserReminder',  authController.protect, userController.setusersubinfo);
+
+
+
 
 module.exports = router;

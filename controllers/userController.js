@@ -1,6 +1,7 @@
 const User = require("../models/userModel");
 const MoodChart = require("../models/MoodChartModal");
 const UserSubscription = require("../models/UserSubscriptionModel")
+const UserReminder = require("../models/RemindersModel")
 
 const catchAsync = require("../utils/catchAsync");
 const AppError = require("../utils/appError");
@@ -64,23 +65,65 @@ exports.addUserMood = catchAsync(async (req, res, next) => {
   today = dd + '/' + mm + '/' + yyyy;
   console.log("Get current date - " + today)
 
+  var happycount = 0;
+  var amazingcount = 0;
+
+  if(req.body.mood.toLowerCase() === "happy") {
+    happycount += 1;
+  }
+
+  if(req.body.mood.toLowerCase() === "amazing") {
+    amazingcount += 1;
+  }
+
   const mood_chart = await MoodChart.find({
     user_id: req.user.id, 
     date: today
   })
 
-  if(mood_chart.length != 0) {
-    await MoodChart.updateOne({user_id: req.user.id, date: today},{timestamp: new Date(),mood: req.body.mood.toLowerCase()})
-    return res.status(200).json({status: 200})
+  if(mood_chart.length == 0) {
+
+    await MoodChart.create({
+      user_id: req.user.id,
+      date: today,
+      timestamp: new Date(),
+      mood: req.body.mood.toLowerCase(),
+      noOfHappyDays: happycount,
+      noOfAmazingDays: amazingcount
+    })
+
+    res.status(200).json({status: 200})
+
   }
 
-  await MoodChart.create({
-    user_id: req.user.id,
-    date: today,
-    timestamp: new Date(),
-    mood: req.body.mood.toLowerCase()
-  })
-  res.status(200).json({status: 200})
+  if(mood_chart.mood === "happy") {
+
+    happycount = happycount + parseInt(mood_chart.noOfHappyDays) - 1;
+
+  } else if(mood_chart.mood === "amazing") {
+
+    amazingcount = amazingcount + parseInt(mood_chart.noOfAmazingDays) - 1;
+
+  } else {
+
+    happycount += parseInt(mood_chart.noOfHappyDays);
+
+    amazingcount += parseInt(mood_chart.noOfAmazingDays);
+
+  }
+  
+  await MoodChart.updateOne(
+    {user_id: req.user.id,
+    date: today},
+
+    {timestamp: new Date(),
+    mood: req.body.mood.toLowerCase(),
+    noOfHappyDays: happycount,
+    noOfAmazingDays: amazingcount}
+  )
+
+  return res.status(200).json({status: 200})
+  
 });
 
 //getting user mood
@@ -96,8 +139,7 @@ exports.getUserMood= catchAsync(async (req, res, next) => {
     console.log("Last Day - " + lastDay);
 
     const transactions = await MoodChart.find({
-        user_id: req.user.id, 
-        mood: "happy",
+        user_id: req.user.id,
         timestamp: {
           $gte: firstDay,
           $lte: lastDay
@@ -264,12 +306,7 @@ exports.getusersubinfo = catchAsync(async (req, res, next) => {
       status:'success',
       data: subscriptions
     })
-       
-    
-    
-
-
-  
+         
   } catch(error) {
     return res.status(500).json({
       status:'failure',
@@ -279,3 +316,77 @@ exports.getusersubinfo = catchAsync(async (req, res, next) => {
 
 
 });
+
+exports.setUserReminder = catchAsync(async (req, res, next) => {
+
+  try {
+
+    console.log(req.body.date);
+    console.log(req.body.time);
+    console.log(req.body.text);
+
+    var firstDay = new Date(req.body.date);
+
+    console.log("First Day - " + firstDay);
+
+    const reminders = await UserReminder.create({
+      user_id: req.user.id,
+      reminder_date: req.body.date,
+      reminder_title: req.body.text,
+      reminder_time: req.body.time,
+      is_active: true,
+      reminder_timestamp: firstDay,
+    }) 
+
+    return res.status(200).json({
+      status:'success',
+      data: reminders
+    })
+
+  } catch(error) {
+
+    return res.status(500).json({
+      status:'failure',
+      error: error.message
+    })
+
+  }
+
+});  
+
+exports.getUserReminder = catchAsync(async (req, res, next) => {
+
+  try {
+
+    var firstDay = new Date();
+    firstDay.setDate(firstDay.getDate() - (firstDay.getDay() + 6) % 7);
+
+    var lastDay = new Date();
+    lastDay.setDate(lastDay.getDate() + ((7 - lastDay.getDay()) % 7) % 7);
+
+    console.log(firstDay)
+    console.log(lastDay)
+
+    const reminders = await UserReminder.find({
+      user_id: req.user.id,
+      reminder_date: {
+        $gte: firstDay,
+        $lte: lastDay
+      }
+    }).sort({ date: 'asc'}) 
+
+    return res.status(200).json({
+      status:'success',
+      data: reminders
+    })
+
+  } catch(error) {
+
+    return res.status(500).json({
+      status:'failure',
+      error: error.message
+    })
+
+  }
+
+});  
