@@ -37,7 +37,7 @@ router.get('/getSubscriptionInfo',  authController.protect, userController.getus
 router.post('/setSubscriptionInfo',  authController.protect, userController.setusersubinfo);
 
 router.get('/getUserReminder',  authController.protect, userController.getUserReminder);
-router.post('/setUserReminder',  authController.protect, userController.setusersubinfo);
+router.post('/setUserReminder',  authController.protect, userController.setUserReminder);
 
 
 
