@@ -16,8 +16,6 @@ const filterObj = (obj, ...allowedFields) => {
   return newObj;
 };
 
-
-
 // If User-wants to change his/her Email & username but not password
 exports.updateMe = catchAsync(async (req, res, next) => {
   if (req.body.password || req.body.passwordConfirm) {
@@ -324,8 +322,13 @@ exports.setUserReminder = catchAsync(async (req, res, next) => {
     console.log(req.body.date);
     console.log(req.body.time);
     console.log(req.body.text);
+    console.log(req.user.id);
 
-    var firstDay = new Date(req.body.date);
+    var parts = (req.body.date).split('/');
+
+    var firstDay = new Date(parts[2], parts[1] - 1, parts[0]);
+
+    firstDay.setHours(0,0,0);
 
     console.log("First Day - " + firstDay);
 
@@ -369,11 +372,11 @@ exports.getUserReminder = catchAsync(async (req, res, next) => {
 
     const reminders = await UserReminder.find({
       user_id: req.user.id,
-      reminder_date: {
+      reminder_timestamp: {
         $gte: firstDay,
         $lte: lastDay
       }
-    }).sort({ date: 'asc'}) 
+    }).sort({ reminder_date: 'asc'}) 
 
     return res.status(200).json({
       status:'success',
